@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #5b2c6f;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #5b2c6f;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #5b2c6f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        p {
+            font-size: 18px;
+        }
+        table {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Disable text selection and copying for riddle */
+        .riddle {
+            user-select: none; /* Prevent selection */
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Disable copying
+            document.addEventListener("copy", function(event) {
+                const selectedText = window.getSelection().toString();
+                const riddleElement = document.querySelector(".riddle");
+
+                if (riddleElement && selectedText.includes(riddleElement.innerText)) {
+                    event.preventDefault();
+                    alert("Copying is disabled for this content!");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <center>
+        <h1>Treasure Hunt 2025</h1>
+        <p>Enter the secret code to unlock your next clue!!!!</p>
+
+        <form method="post">
+            <input type="text" name="code" placeholder="Enter Code..." required>
+            <button type="submit">Unlock Riddle</button>
+        </form>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        {% if riddle %}
+            <table align="center">
+                <tr>
+                    <td>
+                        <h2>Riddle:</h2>
+                        <p class="riddle">{{ riddle }}</p>
+
+                        {% if next_code != "end" %}
+                            <p>Next Code: <strong>{{ next_code }}</strong></p>
+                        {% else %}
+                            <p>🎉 Congratulations! You've solved all the riddles!</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        {% endif %}
+    </center>
+</body>
+</html>
+
